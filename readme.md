@@ -25,7 +25,7 @@
 git clone https://github.com/ph0ebus/psocks.git
 cd psocks
 go build main.go -o psocks # 编译
-./main # 运行
+./psocks # 运行
 ```
 ### 使用
 

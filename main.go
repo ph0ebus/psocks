@@ -13,8 +13,8 @@ var Socks5Proxy string
 func main() {
 
 	var (
-		host = flag.String("host", "0.0.0.0", "监听地址, 默认为0.0.0.0")
-		port = flag.Int("port", 1080, "监听端口, 默认为1080")
+		host = flag.String("host", "0.0.0.0", "监听地址")
+		port = flag.Int("port", 1080, "监听端口")
 	)
 
 	flag.StringVar(&Socks5Proxy, "socks", "", "socks5代理地址, 默认为空")
