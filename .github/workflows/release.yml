@@ -4,6 +4,9 @@ on:
   push:
     tags: [ "v*" ]
 
+permissions:  # 显式声明所需权限
+  contents: write  # 必需：允许创建 Release
+
 jobs:
   build:
     strategy:
@@ -54,6 +57,8 @@ jobs:
   release:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # 单独为 Release 任务授权
     steps:
       - uses: actions/download-artifact@v4  # 更新到 v4
         with:
