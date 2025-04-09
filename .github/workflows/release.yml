@@ -2,7 +2,7 @@ name: Release
 
 on:
   push:
-    tags: [ "v*" ]  # 推送 tag 时触发 (例如 v1.0.0)
+    tags: [ "v*" ]
 
 jobs:
   build:
@@ -40,12 +40,13 @@ jobs:
         env:
           GOOS: ${{ matrix.goos }}
           GOARCH: ${{ matrix.goarch }}
-          CGO_ENABLED: 0  # 禁用 CGO 获得静态二进制文件
+          CGO_ENABLED: 0
         run: |
+          mkdir -p bin
           go build -v -o bin/psocks-${{ matrix.goos }}-${{ matrix.goarch }}${{ matrix.suffix }} .
           
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4  # 更新到 v4
         with:
           name: psocks-${{ matrix.goos }}-${{ matrix.goarch }}
           path: bin/psocks-${{ matrix.goos }}-${{ matrix.goarch }}${{ matrix.suffix }}
@@ -54,7 +55,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4  # 更新到 v4
         with:
           path: artifacts
 
@@ -62,9 +63,9 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            artifacts/psocks-linux-amd64
-            artifacts/psocks-windows-amd64.exe
-            artifacts/psocks-darwin-amd64
-            artifacts/psocks-darwin-arm64
+            artifacts/psocks-linux-amd64/psocks-linux-amd64
+            artifacts/psocks-windows-amd64/psocks-windows-amd64.exe
+            artifacts/psocks-darwin-amd64/psocks-darwin-amd64
+            artifacts/psocks-darwin-arm64/psocks-darwin-arm64
           draft: false
           prerelease: false
